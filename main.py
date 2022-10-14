@@ -49,7 +49,7 @@ def get_all_previously_blocked():
 
 def block_list_text(ip):
     with open("block_list.txt", "a") as file:
-        file.write(ip)
+        file.write(ip + "\n")
 
 
 def block_all(block_list):
