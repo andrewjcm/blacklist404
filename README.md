@@ -1,5 +1,5 @@
 #### Simple script to block black hat scrapers
-Must have the ufw firewall enabled
+Must have the ufw firewall enabled  
 Recomend running on a cron job.
 
 ##### Usage:
