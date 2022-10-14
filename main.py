@@ -15,29 +15,52 @@ def is_404(log_line):
         return False
     return True
 
+
 def is_wp_login(log_line):
     match_wp_login = re.search(r"\/wp\-login", log_line)
     return True if match_wp_login else False
+
 
 def should_block(log_line):
     if is_404(log_line) and is_wp_login(log_line):
         return True
     return False
 
+
 def get_block_list(file_name):
-    block_list = []
+    block_list = set()
     with open(file_name, "r") as access_log:
         for line in access_log:
             ip = get_ip(line)
             if should_block(line) and ip not in block_list:
-                block_list.append(ip)
+                block_list.add(ip)
     return block_list
 
+def get_all_previously_blocked():
+    previously_blocked_ips = set()
+    try:
+        with open("block_list.txt", "r") as file:
+            for line in file:
+                previously_blocked_ips.add(line.strip("\n"))
+        return previously_blocked_ips
+    except FileNotFoundError:
+        return previously_blocked_ips
+
+
+def block_list_text(ip):
+    with open("block_list.txt", "a") as file:
+        file.write(ip)
+
+
 def block_all(block_list):
-    for ip in block_list:
-        print(f"Blocking ip: {ip}")
-        args = shlex.split(f"ufw deny from {ip} to any")
-        subprocess.run(args)
+    block_list -= get_all_previously_blocked()
+    if len(block_list) > 0:
+        for ip in block_list:
+            print(f"Blocking ip: {ip}")
+            args = shlex.split(f"ufw deny from {ip} to any")
+            subprocess.run(args)
+    else:
+        print("Nothing new to block.")
 
 
 def main():
