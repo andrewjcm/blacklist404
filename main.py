@@ -57,6 +57,7 @@ def block_all(block_list):
     if len(block_list) > 0:
         for ip in block_list:
             print(f"Blocking ip: {ip}")
+            block_list_text(ip)
             args = shlex.split(f"ufw deny from {ip} to any")
             subprocess.run(args)
     else:
