@@ -3,4 +3,4 @@ Must have the ufw firewall enabled
 Recomend running on a cron job.
 
 ##### Usage:
-```sudo python3 blacklist/main.py /path/to/access.log```
+```sudo python3 blacklist404/main.py /path/to/access.log```
