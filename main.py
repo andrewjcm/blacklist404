@@ -1,5 +1,7 @@
 import subprocess, re, sys, shlex
+from datetime import datetime
 
+now = datetime.now()
 
 def get_ip(log_line):
     ipv4_pattern = r"[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"
@@ -56,18 +58,18 @@ def block_all(block_list):
     block_list -= get_all_previously_blocked()
     if len(block_list) > 0:
         for ip in block_list:
-            print(f"Blocking ip: {ip}")
+            print(f"[{now}] Blocking ip: {ip}")
             block_list_text(ip)
             args = shlex.split(f"ufw deny from {ip} to any")
             subprocess.run(args)
     else:
-        print("Nothing new to block.")
+        print(f"[{now}]Nothing new to block.")
 
 
 def main():
     args = sys.argv
     if not args[1]:
-        raise Exception("Error: no filename given")
+        raise Exception(f"[{now}] Error: no filename given")
     file_name = args[1]
     block_list = get_block_list(file_name)
     if block_list:
