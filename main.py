@@ -71,7 +71,7 @@ def main():
     try:
         file_name = args[1]
     except IndexError:
-        raise Exception(f"You must provide the path to an access file.")
+        raise Exception(f"You must provide the path to an access file. I.e. 'sudo python3 main.py /var/log/nginx/access.log'")
     block_list = get_block_list(file_name)
     if block_list:
         block_all(block_list)
