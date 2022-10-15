@@ -55,7 +55,7 @@ def block_list_text(ip):
 
 
 def block_all(block_list):
-    block_list -= get_all_previously_blocked()
+    block_list = block_list - get_all_previously_blocked()
     if len(block_list) > 0:
         for ip in block_list:
             print(f"[{now}] Blocking ip: {ip}")
@@ -68,9 +68,10 @@ def block_all(block_list):
 
 def main():
     args = sys.argv
-    if not args[1]:
+    try:
+        file_name = args[1]
+    except IndexError:
         raise Exception(f"[{now}] Error: no filename given")
-    file_name = args[1]
     block_list = get_block_list(file_name)
     if block_list:
         block_all(block_list)
