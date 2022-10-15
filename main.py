@@ -18,8 +18,8 @@ def is_404(log_line):
     return True
 
 
-def is_wp_login(log_line):
-    match_wp_login = re.search(r"\/wp\-login", log_line)
+def is_wp_url(log_line):
+    match_wp_login = re.search(r"\/wp\-", log_line)
     return True if match_wp_login else False
 
 
