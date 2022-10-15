@@ -63,7 +63,7 @@ def block_all(block_list):
             args = shlex.split(f"ufw deny from {ip} to any")
             subprocess.run(args)
     else:
-        print(f"[{now}]Nothing new to block.")
+        print(f"[{now}] Nothing new to block.")
 
 
 def main():
@@ -71,7 +71,7 @@ def main():
     try:
         file_name = args[1]
     except IndexError:
-        raise Exception(f"[{now}] Error: no filename given")
+        raise Exception(f"You must provide the path to an access file.")
     block_list = get_block_list(file_name)
     if block_list:
         block_all(block_list)
