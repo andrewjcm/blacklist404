@@ -24,7 +24,7 @@ def is_wp_url(log_line):
 
 
 def should_block(log_line):
-    if is_404(log_line) and is_wp_login(log_line):
+    if is_404(log_line) and is_wp_url(log_line):
         return True
     return False
 
