@@ -11,11 +11,20 @@ def get_ip(log_line):
     return ip_match.group(0)
 
 
-def is_404(log_line):
+def is_4xx(log_line):
     match404 = re.search(" 404 ", log_line)
-    if not match404:
+    match444 = re.search(" 444 ", log_line)
+    if not match404 and not match444:
         return False
     return True
+
+
+def is_3xx(log_line):
+    match301 = re.search(" 301 ", log_line)
+    if not match301:
+        return False
+    return True
+
 
 
 def is_wp_url(log_line):
@@ -24,7 +33,7 @@ def is_wp_url(log_line):
 
 
 def should_block(log_line):
-    if is_404(log_line) and is_wp_url(log_line):
+    if (is_4xx(log_line) or is_3xx(log_line)) and is_wp_url(log_line):
         return True
     return False
 
